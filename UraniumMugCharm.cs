@@ -10,8 +10,16 @@ namespace CharmUraniumMug
 		internal UraniumMugCharm()
 			: base("UraniumMug", "Uranium Mug - Warm Glow", defaultWearPercent: 1f, defaultCooldownSeconds: null, PrefabName)
 		{
-			// Extra host-synced numbers for this power go here, for example:
-			// Amount = AddSetting("Amount", 30f, 1f, 100f, "Description for the config file.");
+			// WearPercent means percent per SECOND of actual healing for this charm.
+			WearsPerSecond = true;
+			HealIntervalSeconds = AddSetting("HealIntervalSeconds", 3f, 0.5f, 30f, "Seconds of crouching between two heals.");
+			HealAmount = AddSetting("HealAmount", 1f, 1f, 20f, "Health points restored on each heal (whole points).");
 		}
+
+		/// <summary>Seconds of crouching between two heals.</summary>
+		internal CharmSetting HealIntervalSeconds { get; }
+
+		/// <summary>Health points restored on each heal (rounded to a whole number when used).</summary>
+		internal CharmSetting HealAmount { get; }
 	}
 }

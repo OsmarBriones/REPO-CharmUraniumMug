@@ -30,9 +30,22 @@ public class GameContractTests
 	[TestMethod]
 	public void Valuable_HasTheValueFields()
 	{
-		// TODO: add one RequireField / RequireMethod line for every game member this charm's effect reads, writes or patches,
-		// so a game update that renames or removes one fails here with a clear message.
 		RequireField("ValuableObject", "dollarValueCurrent");
+	}
+
+	[TestMethod]
+	public void WarmGlow_HasTheMembersItReadsAndCalls()
+	{
+		RequireField("PlayerController", "instance");
+		RequireField("PlayerController", "Crouching");
+		RequireField("PlayerAvatar", "instance");
+		RequireField("PlayerAvatar", "playerHealth");
+		RequireField("PlayerAvatar", "isTumbling");
+		RequireField("PlayerAvatar", "deadSet");
+		RequireField("PlayerAvatar", "isDisabled");
+		RequireField("PlayerHealth", "health");
+		RequireField("PlayerHealth", "maxHealth");
+		RequireMethod("PlayerHealth", "Heal", 2);
 	}
 
 	// ---- Helpers ----

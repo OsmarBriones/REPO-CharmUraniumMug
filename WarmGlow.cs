@@ -14,6 +14,12 @@ namespace CharmUraniumMug
 
 		internal UraniumMugCharm Charm { get; set; } = null!;
 
+		/// <summary>Forgets the time collected towards the next heal (called when a level ends).</summary>
+		internal void ResetState()
+		{
+			timer.Reset();
+		}
+
 		private void Update()
 		{
 			if (Charm == null || !Charm.IsActive)
@@ -51,7 +57,10 @@ namespace CharmUraniumMug
 			int amount = Mathf.Max(1, Mathf.RoundToInt(Charm.HealAmount.Value)) * heals;
 			int before = health.health;
 			health.Heal(amount, false);
-			Charm.LogDebug($"Warm Glow: health {before} -> {health.health} of {health.maxHealth}");
+			if (Charm.DebugMode)
+			{
+				Charm.LogDebug($"Warm Glow: health {before} -> {health.health} of {health.maxHealth}");
+			}
 		}
 	}
 }

@@ -21,5 +21,13 @@ namespace CharmUraniumMug
 
 		/// <summary>Health points restored on each heal (rounded to a whole number when used).</summary>
 		internal CharmSetting HealAmount { get; }
+
+		/// <summary>The effect component on the plugin's own persistent object (not a level object); set by the plugin.</summary>
+		internal WarmGlow? Glow { get; set; }
+
+		protected override void OnLevelEnded()
+		{
+			Glow?.ResetState();
+		}
 	}
 }

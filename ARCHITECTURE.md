@@ -47,3 +47,12 @@ Provided by CharmCore: the `Debug.DebugMode` setting (off by default) places the
 - **Heal without effect:** `Heal(amount, false)` avoids the camera glitch each few seconds.
 - **No cooldown:** the interval is the pacing.
 - **Frame-burst cap:** at most 5 heals are due in one frame.
+
+## Runtime hygiene
+
+- **References and level state:** fixed. `HealTimer` (inside `WarmGlow`) accumulates seconds towards the next heal; `UraniumMugCharm` now overrides `OnLevelEnded` and resets it through `WarmGlow.ResetState()`. It was already reset on every inactive or non-crouching frame. The charm holds the component only through an instance property; the component lives on the plugin's own persistent object, and no static field holds a game object.
+- **Per-frame work:** `WarmGlow.Update` returns at once when the charm is inactive and allocates nothing in either state (the game's singletons are read directly, no Find calls, no collections).
+- **Debug logs:** fixed. The `LogDebug` after each heal is now guarded with `if (Charm.DebugMode)`.
+- **Changes to the game:** nothing needed. The mod only calls `PlayerHealth.Heal`; it changes no setting that would need restoring.
+- **Static game objects and Find calls:** none.
+- Known limit outside this mod: while the charm is active, CharmCore's `IsActive` and `CharmSetting.Value` build their host-setting key strings on each call; that is CharmCore's code and was left alone.

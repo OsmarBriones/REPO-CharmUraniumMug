@@ -26,7 +26,9 @@ namespace CharmUraniumMug
 			// Registering binds Enabled, WearPercent, CooldownSeconds and the Debug section (DebugMode) in this mod's config file.
 			UraniumMugCharm charm = new UraniumMugCharm();
 			CharmsApi.Register(charm, Config);
-			this.gameObject.AddComponent<WarmGlow>().Charm = charm;
+			WarmGlow glow = this.gameObject.AddComponent<WarmGlow>();
+			glow.Charm = charm;
+			charm.Glow = glow;
 
 			Logger.LogInfo($"{PluginName} {PluginVersion} loaded!");
 		}
